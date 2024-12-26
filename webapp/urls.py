@@ -16,6 +16,7 @@ urlpatterns = [
     path("logout/", views.logout, name="logout"),
     path("access-denied/", views.AccessDenied, name="access_denied"),
     path("received-documents/", views.receivedDocuments, name="received_documents"),
+    path("register/received-document/", views.registerReceivedDocument, name="register_received_document"),
 ]
 urlpatterns = urlpatterns + static(
     settings.MEDIA_URL, document_root=settings.MEDIA_ROOT

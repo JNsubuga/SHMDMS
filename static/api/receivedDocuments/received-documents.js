@@ -1,12 +1,13 @@
 var protocol = window.location.protocol
 var hostUrl = protocol + "//" + window.location.host + "/"
 
-$(() => {
-    receivedDocument();
-})
+// $(() => {
+//     receivedDocument();
+// })
 
 const receivedDocument = () => {
-    const csrftoken = document.querySelector('#global-auth-from [name=csrfmiddlewaretoken]').value;
+    // const csrftoken = document.querySelector('#global-auth-form [name=csrfmiddlewaretoken]').value;
+    // const csrftoken = document.querySelector('#global-auth-form [name=csrfmiddlewaretoken]').value;
     $('#spinner-container').show();
     var auth_user_token = $('#auth-user-token').val();
     var auth_user_id = $('#auth-user-id').val();

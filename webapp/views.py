@@ -21,7 +21,6 @@ _receivedDocuments = ReceivedDocuments()
 _gender = Genders()
 _security = Security()
 
-
 def getIcon(module):
     
     if module["code_name"] == "dashboard":
@@ -33,8 +32,7 @@ def getIcon(module):
     elif module["code_name"] == "roles":
         icon = "nav-icon fas fa-lock"
     else:
-        icon = "far fa-cicle nav-icon"
-        # icon = "nav-icon fas"
+        icon = "far fa-circle nav-icon"
     return icon
 
 def getFullUrlPath(request, route):
@@ -110,7 +108,7 @@ def generatedSideMenu(modules, request):
                     </a>
                 </li>
             """
-        return item
+    return item
 
 #############
 def index(request):
@@ -325,15 +323,36 @@ def receivedDocuments(request):
         auth_user = _users.getAuthUserById(request, lang, userid)
         sidemenu = generatedSideMenu(modules, request)
 
-        receivedDocuments = _receivedDocuments(request, lang)
+        receivedDocuments = _receivedDocuments.getAllReceivedDocuments(request, lang)
 
         return render (
+            request,
             "receivedDocuments/receivedDocuments.html",
             {
                 "modules": modules,
                 "auth_user": auth_user,
                 "sidemenu": sidemenu,
                 "receivedDocuments": receivedDocuments
+            }
+        )
+    else:
+        return redirect("home")
+
+def registerReceivedDocument(request):
+    lang = DEFAULT_LANG
+    if request.user.is_authenticated:
+        userid = request.user.pk
+        modules = _modules.getSideBarModules(request, lang, userid)
+        auth_user = _users.getAuthUserById(request, lang, userid)
+        sidemenu = generatedSideMenu(modules, request)
+
+        return render(
+            request,
+            "receivedDocuments/registerReceivedDocument.html",
+            {
+                "modules": modules,
+                "auth_user": auth_user,
+                "sidemenu": sidemenu
             }
         )
     else:

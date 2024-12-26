@@ -1,0 +1,121 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SHMDMS | Demo</title>
+
+    <!-- Google Font: Source Sans Pro -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback"
+    />
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="{% static 'plugins/fontawesome-free/css/all.min.css' %}"
+    />
+    <!-- icheck bootstrap -->
+    <link
+      rel="stylesheet"
+      href="{% static 'plugins/icheck-bootstrap/icheck-bootstrap.min.css' %}"
+    />
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{% static 'dist/css/adminlte.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'dist/css/custom.css' %}" />
+    <style>
+      .form-control {
+        padding-top: 25px;
+        padding-bottom: 25px;
+        font-size: 20px;
+      }
+
+      .btn {
+        padding-top: 15px;
+        padding-bottom: 15px;
+      }
+    </style>
+  </head>
+  <body class="hold-transition login-page">
+    <div class="login-box">
+      <!-- /.login-logo -->
+      <div class="card card-outline card-primary">
+        <div class="card-header text-center">
+          <a href="#" class="h1"><b>SHM</b>DMS</a>
+        </div>
+        <!--fast spinner-->
+        <div class="spinner-container" id="spinner-container">
+          <div class="spinner-overlay">
+            <div class="spin"></div>
+          </div>
+        </div>
+        <!--../fast spinner-->
+        <div class="card-body">
+          <p class="login-box-msg">Sign in to start your session</p>
+
+          <form id="shmdms-login-form" action="{% url 'home' %}" method="post">
+            {% csrf_token %}
+            <div class="form-group mb-3">
+              <input
+                type="text"
+                class="form-control"
+                name="shmdms-input-email"
+                id="shmdms-input-email"
+                placeholder="Email or Username"
+              />
+            </div>
+            <div class="form-group mb-3">
+              <input
+                type="password"
+                class="form-control"
+                name="shmdms-input-password"
+                id="shmdms-input-password"
+                placeholder="Password"
+              />
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <div class="icheck-primary">
+                  <input name="remember" type="checkbox" id="remember" />
+                  <label for="remember"> Remember Me </label>
+                </div>
+                <div class="col-12">
+                  <span id="form-error" class="text-danger"
+                    >{{ errorResponse.message }}</span
+                  >
+                </div>
+
+                <div class="col-12">
+                  <button
+                    type="submit"
+                    id="shmdms-btn-login"
+                    class="btn btn-primary btn-block mt-3"
+                  >
+                    Sign In
+                  </button>
+                </div>
+              </div>
+              <!-- /.col -->
+
+              <!-- /.col -->
+            </div>
+          </form>
+
+          <!-- /.social-auth-links -->
+        </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+    </div>
+    <!-- /.login-box -->
+
+    <!-- jQuery -->
+    <script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+    <!-- Bootstrap 4 -->
+    <script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <!-- AdminLTE App -->
+    <script src="{% static 'dist/js/adminlte.min.js' %}"></script>
+    <script src="{% static 'api/login.js' %}"></script>
+  </body>
+</html>

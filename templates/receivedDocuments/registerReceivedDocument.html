@@ -1,0 +1,165 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SHMDMS | Received Documents</title>
+
+    <!-- Google Font: Source Sans Pro -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback"
+    />
+    <!-- DataTables -->
+    <link
+      rel="stylesheet"
+      href="{% static 'plugins/datatables-bs4/css/dataTables.bootstrap4.min.css'%}"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'plugins/datatables-responsive/css/responsive.bootstrap4.min.css'%}"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'plugins/datatables-buttons/css/buttons.bootstrap4.min.css'%}"
+    />
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="{% static 'plugins/fontawesome-free/css/all.min.css' %}"
+    />
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{% static 'dist/css/adminlte.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'dist/css/custom.css' %}" />
+  </head>
+  <body class="hold-transition sidebar-mini layout-navbar-fixed">
+    <!-- Site wrapper -->
+    <div class="wrapper">
+      <!-- Navbar -->
+      <!-- ============= Nav ============ -->
+      {% include "parts/navbar.html" %}
+      <!-- ============= Nav ============ -->
+      <!-- ============= Aside ============ -->
+      {% include "parts/sidemenu.html" %}
+      <!-- ============= Aside ============ -->
+
+      <!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper">
+        <section class="content">
+          <div class="card card-default">
+            <div class="card-header">
+              <h3>Register Received Document</h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+              <form id="received-document-form">
+                {% csrf_token %}
+                <div class="row">
+                  <div class="col-sm-12">
+                    <!-- textarea -->
+                    <div class="form-group">
+                      <label>Memo/Brief</label>
+                      <textarea
+                        class="form-control"
+                        id="memo"
+                        rows="3"
+                        placeholder="Memo/Brief ..."
+                      ></textarea>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-sm-6">
+                    <!-- text input -->
+                    <div class="form-group">
+                      <label>Leter From/Office</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="officeFrom"
+                        placeholder="Leter From/Office ..."
+                      />
+                    </div>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <!-- text input -->
+                    <div class="form-group">
+                      <label>Received At</label>
+                      <input
+                        type="date"
+                        id="dateReceived"
+                        class="form-control"
+                        name=""
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-sm-6">
+                    <!-- text input -->
+                    <div class="form-group">
+                      <label>Contact Number</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="contactNumber"
+                        placeholder="Contact Number ..."
+                      />
+                    </div>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <!-- text input -->
+                    <div class="form-group">
+                      <label>Contact Name</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="contactName"
+                        placeholder="Contact Name ..."
+                      />
+                    </div>
+                  </div>
+                </div>
+              </form>
+              <div class="card-footer d-flex justify-content-end">
+                <button
+                  type="button"
+                  onclick="saveData()"
+                  class="btn btn-primary"
+                  id="save-btn"
+                >
+                  <i class="fa fa-save"></i> Save Record
+                </button>
+              </div>
+            </div>
+            <!-- /.card-body -->
+          </div>
+        </section>
+        <!-- /.content -->
+      </div>
+      <!-- /.content-wrapper -->
+      {% include 'parts/footer.html' %}
+
+      <!-- Control Sidebar -->
+      <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+      </aside>
+      <!-- /.control-sidebar -->
+    </div>
+    <!-- /.wrapper -->
+
+    <script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+    <!-- Bootstrap 4 -->
+    <script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- AdminLTE App -->
+    <script src="{% static 'dist/js/adminlte.min.js' %}"></script>
+    <!-- Page specific script -->
+    <script src="{% static 'api/receivedDocuments/register-received-document.js' %}"></script>
+  </body>
+</html>

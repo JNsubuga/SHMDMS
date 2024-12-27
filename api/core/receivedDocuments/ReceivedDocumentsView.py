@@ -76,6 +76,27 @@ class registerReceivedDocument(APIView):
                         "status": False
                     }
                 )
+            elif not data["officeFrom"]:
+                return Response(
+                    {
+                        "message": "Leter From/Office is a required field!!!",
+                        "status": False
+                    }
+                )
+            elif not data["dateReceived"]:
+                return Response(
+                    {
+                        "message": "Received At is a required field!!!",
+                        "status": False
+                    }
+                )
+            elif not data["contactNumber"]:
+                return Response(
+                    {
+                        "message": "Contact Number is a required field!!!",
+                        "status": False
+                    }
+                )
             else:
                 _receivedDocument.registerReceivedDocument(userid, data)
                 return Response(
@@ -84,6 +105,7 @@ class registerReceivedDocument(APIView):
                         "status": True
                     }, status=201
                 )
+                # return Response (_receivedDocument.registerReceivedDocument(userid, data))
         else:
             return Response(
                 {

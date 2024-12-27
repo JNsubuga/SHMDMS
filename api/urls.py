@@ -309,7 +309,7 @@ urlpatterns = [
     ),
     # Register Received Document
     path(
-        "<str:lang>/shmdms/register/received-document",
+        "<str:lang>/shmdms/register/received-document/",
         ReceivedDocumentsView.registerReceivedDocument.as_view(),
         name="register-received-document",
     ),

@@ -21,7 +21,7 @@ class ReceivedDocuments:
                 "dateReceived": receivedDocument.dateReceived,
                 "contactName": receivedDocument.contactName,
                 "contactNumber": receivedDocument.contactNumber,
-                "submitted_by": self.users.getAuthUserById(request, lang, receivedDocument.submitted_by),
+                "submitted_by": self.users.getAuthUserById(request, lang, receivedDocument.submitted_by_id),
                 # is_disabled = models.BooleanField(default=False)
                 # created = models.DateTimeField(auto_now_add=True)
             }
@@ -51,7 +51,7 @@ class ReceivedDocuments:
             dateReceived = data["dateReceived"],
             contactName = data["contactName"],
             contactNumber = data["contactNumber"],
-            submitted_by = userid,
+            submitted_by = User(pk=userid),
             is_disabled = data["is_disabled"]
         )
         receivedDocument.save()

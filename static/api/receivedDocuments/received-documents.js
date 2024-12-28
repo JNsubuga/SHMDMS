@@ -45,16 +45,18 @@ const receivedDocument = () => {
         
         $("#received-document-data-table").DataTable({
             data: dataSet,
-            resnponse: true,
+            responsive: true,
             lengthChange: false,
             autoWidth: false,
             bDestroy: true,
-            button: ["copy", "csv", "excel", "pdf", "print", "colvis"],
+            buttons: ["copy", "csv", "excel", "pdf", "print", "colvis"],
             columns: [
-                {title: "Memo/Breif"},
+                {title: "Memo/Breif", width:"40%"},
                 {title: "Letter From/Office"},
                 {title: "Received At"},
-                {title: "Contact"}
+                {title: "Contact"},
+                {title: "Action(s)", className:"dt-center"},
+
             ]
         })
         .buttons()

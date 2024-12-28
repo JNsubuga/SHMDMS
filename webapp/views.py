@@ -40,14 +40,16 @@ def getFullUrlPath(request, route):
         str(request.build_absolute_uri()).replace(request.get_full_path(), "") + "/" + route
     )
 
+
 def getSideMenuSubmenu(request, submodules, module):
     micon = getIcon(module)
     murl = getFullUrlPath(request, module["route_name"])
     item = """<ul class="nav nav-treeview">"""
     item += f"""<li class="nav-item">
-                <a href="{murl}" class="nav-link">
-                    <i class="{ micon }"></i>
-                    <p>{module["module_name"]}</p>
+                <a href="{ murl }" class="nav-link">
+                <i class="{ micon }"></i>
+                <p>{module['module_name']}</p>
+                </a>
             </li>"""
     for submodule in submodules:
         icon = getIcon(submodule)
@@ -55,28 +57,28 @@ def getSideMenuSubmenu(request, submodules, module):
         if submodule["has_children"] and len(submodule["sub_module"]) > 0:
             items = getSideMenuSubmenu(request, submodule["sub_module"], submodule)
             item += f"""
-                <li class="nav-item">
-                    <a href="{ url }" class="nav-link">
-                        <i class="{ icon }"></i>
-                        <p>
-                            {submodule["module_name"]}
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    {items}
-                </li>
+              <li class="nav-item">
+                <a href="{ url }" class="nav-link">
+                <i class="{ icon }"></i>
+                <p>
+                   {submodule['module_name']}
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+                </a>
+                {items}
+            </li>
             """
         else:
-            item += f"""
-                <li class="nav-item">
-                    <a href="{ url }" class="nav-link">
+            item += f"""<li class="nav-item">
+                        <a href="{ url }" class="nav-link">
                         <i class="{ icon }"></i>
-                        <p>{submodule["module_name"]}</p>
-                    </a>
-                </li>
-            """
+                        <p>{submodule['module_name']}</p>
+                        </a>
+                    </li>
+                    """
     item += """</ul>"""
     return item
+
 
 def generatedSideMenu(modules, request):
     item = ""
@@ -85,30 +87,29 @@ def generatedSideMenu(modules, request):
         micon = getIcon(module)
         if module["has_children"] and len(module["sub_module"]) > 0:
             items = getSideMenuSubmenu(request, module["sub_module"], module)
-            items += f"""
-                <li class="nav-itme">
-                    <a href="{ url }" class="nav-link">
-                        <i class="{ micon }"></i>
-                        <p>
-                            {module["module_name"]}
-                            <i class="right fas fa-angle-left></i>
-                        </p>
-                    </a>
-                    {items}
-                </li>
+            item += f"""
+              <li class="nav-item">
+                <a href="{ url }" class="nav-link">
+                    <i class="{ micon }"></i>
+                    <p>
+                    {module['module_name']}
+                        <i class="right fas fa-angle-left"></i>
+                    </p>
+                </a>
+                {items}
+            </li>
             """
         else:
-            item += f"""
-                <li class="nav-item">
+            item += f"""<li class="nav-item">
                     <a href="{ url }" class="nav-link">
-                        <i class="{ micon }"></i>
-                        <p>
-                            {module["module_name"]}
-                        </p>
+                    <i class="{ micon }"></i>
+                    <p>
+                        {module['module_name']}
+                    </p>
                     </a>
-                </li>
-            """
+                </li>"""
     return item
+
 
 #############
 def index(request):

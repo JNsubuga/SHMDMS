@@ -51,11 +51,11 @@ const receivedDocument = () => {
             bDestroy: true,
             buttons: ["copy", "csv", "excel", "pdf", "print", "colvis"],
             columns: [
-                {title: "Memo/Breif", width:"40%"},
-                {title: "Letter From/Office"},
-                {title: "Received At"},
+                {title: "Memo/Brief", width:"40%"},
+                {title: "Letter From/To"},
+                {title: "Date Received"},
                 {title: "Contact"},
-                {title: "Action(s)", className:"dt-center"},
+                // {title: "Action(s)", className:"dt-center"},
 
             ]
         })
@@ -64,3 +64,95 @@ const receivedDocument = () => {
         .appendTo('#received-document-data-table_wrapper .col-md-6:eq(0)')
     })
 } 
+
+const resetFrom = (() => {
+    $("#memo").val("");
+    $("#officeFromTo").val("");
+    $("#dateReceived").val("");
+    $("#contactNumber").val("");
+    $("#contactName").val("");
+});
+
+const receivedDocumentForm = ((receivedDocumentid = null) => {
+    $("#modal-xl").modal('show');
+    $('#form-alert').hide();
+    var auth_user_token = $("#auth-user-token").val();
+    const csrftoken = document.querySelector('#received-document-form [name=csrfmiddlewaretoken]').value;
+    if (receivedDocumentid != null) {
+        $("#spinner-container-init-edit").show();
+        $("#selected-received-document-id").val(receivedDocumentid);
+        $(".modal-title").html("Edit Record");
+        $("#save-btn").html("Save Changes");
+        $("#is-disabod").html('<input class="custom-control-input" type="checkbox" id="is-disabled"><label for="is-disabled" class="custom-control-label">Disabled</label>');
+
+        $.ajax({
+            "url": hostUrl + "api/en/shmdms/received-document/" + receivedDocumentid,
+            "method": "GET",
+            "headers": {
+                "Authorization": "Token " + auth_user_token
+            },
+            onerror: (error) => {
+                $("#spinner-container-init-edit").hide();
+                console.log(error.responseText);
+            }
+        }).done((response) => {
+            $("#spinner-container-init-edit").hide();
+            // console.log(response);
+            $("#title").val(response.title)
+            $("#is-disabled").val(response.is_disabled).prop('checked', response.is_disabled);
+        });
+
+    } else {
+        resetFrom();
+        var receivedDocumentid = "null";
+        $("#selected-received-document-id").val(receivedDocumentid);
+        $(".modal-title").html("Register Received Document");
+        $("#save-btn").html("Submit");
+        $("#is-disabod").html('');
+    }
+});
+
+const saveData = (() => {
+    const csrftoken = document.querySelector('#received-document-form [name=csrfmiddlewaretoken]').value;
+    var auth_user_token = $("#auth-user-token").val();
+    var receivedDocumentid = $("#selected-received-document-id").val();
+    $("#spinner-container").show();
+    
+    var data = JSON.stringify({
+        "memo": $("#memo").val(),
+        "officeFrom": $("#officeFromTo").val(),
+        "dateReceived": $("#dateReceived").val(),
+        "contactName": $("#contactName").val(),
+        "contactNumber": $("#contactNumber").val(),
+        "is_disabled": $("#is-disabled").is(":checked")
+    })
+
+    if(receivedDocumentid != "null"){
+
+    }
+    else{
+        $.ajax({
+            "url": hostUrl + "api/en/shmdms/register/received-document/",
+            "method": "POST",
+            "headers": {
+                "Authorization": "Token "+auth_user_token,
+                "Content-Type": "application/json",
+                "X-CSRFToken": csrftoken
+            },
+            data: data
+        }).done((response)=>{
+            //console.log(response);
+            if (response.status) {
+                $('#form-alert').show();
+                $("#form-alert").html('<div class="alert alert-success alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><h5><i class="icon fas fa-check"></i> Success!</h5>' + response.message + '</div>');
+                setTimeout(() => {
+                  $("#modal-xl").modal('hide');
+                }, 2000);
+              } else {
+                $("#form-alert").html('<div class="alert alert-danger alert-dismissible"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><h5><i class="icon fa fa-times"></i> Error!</h5>' + response.message + '</div>');
+            }
+            // console.log(response);
+            receivedDocument();
+        })
+    }
+})

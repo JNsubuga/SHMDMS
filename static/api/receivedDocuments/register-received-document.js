@@ -4,6 +4,10 @@ var hostUrl = protocol + "//" + window.location.host + "/";
 
 $(()=>{
     $("#is-disabod").html('<input class="custom-control-input" type="checkbox" id="is-disabled"><label for="is-disabled" class="custom-control-label">Disabled</label>');
+    $("#shmdms-login-form").submit(function (e) {
+        e.preventDefault();
+        loginUser();
+    });
 })
 
 
@@ -46,8 +50,9 @@ const saveData = (() => {
         // window.location.href = hostUrl + 'users/';
             if (response.success) {
                 setTimeout(() => {
-                    window.location.href = hostUrl + 'received-documents/';
-                }, 5000);
+                    // window.location.href = hostUrl + 'received-documents/';
+
+                }, 2000);
             }
             console.log(response);
     })

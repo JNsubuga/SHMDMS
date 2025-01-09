@@ -64,7 +64,119 @@
           <!-- /.container-fluid -->
         </section>
 
-        <div class=""></div>
+        <div class="modal fade" id="modal-xl">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title"></h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <!--..spinner start-->
+                            <div class="spinner-container" id="spinner-container-init-edit">
+                            <div class="spinner-overlay">
+                                <div class="spin"></div>
+                            </div>
+                            </div>
+                            <!--spinner end-->
+                            <form id="received-document-form">
+                              {% csrf_token %}
+                              <!--Alert Message-->
+                              <div class="row">
+                                <div id="form-alert" class="form-group pt-3 col-md-12"></div>                              
+                              </div>
+                              <input type="hidden" class="form-control" id="selected-received-document-id">
+
+                              <div class="row">
+                                <div class="col-sm-12">
+                                  <!-- textarea -->
+                                  <div class="form-group">
+                                    <label>Memo/Brief</label>
+                                    <textarea
+                                      class="form-control"
+                                      id="memo"
+                                      rows="3"
+                                      placeholder="Memo/Brief ..."
+                                    ></textarea>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="row">
+                                <div class="col-sm-6">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label>Leter From/To</label>
+                                    <input
+                                      type="text"
+                                      class="form-control"
+                                      id="officeFromTo"
+                                      placeholder="Leter From/To ..."
+                                    />
+                                  </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label>Date Received</label>
+                                    <input
+                                      type="date"
+                                      id="dateReceived"
+                                      class="form-control"
+                                      name=""
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="row">
+                                <div class="col-sm-6">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label>Contact Number</label>
+                                    <input
+                                      type="text"
+                                      class="form-control"
+                                      id="contactNumber"
+                                      placeholder="Contact Number ..."
+                                    />
+                                  </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                  <!-- text input -->
+                                  <div class="form-group">
+                                    <label>Contact Name</label>
+                                    <input
+                                      type="text"
+                                      class="form-control"
+                                      id="contactName"
+                                      placeholder="Contact Name ..."
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                              <!--Is Disabled-->
+                              <div
+                                class="custom-control custom-checkbox col-sm-12 text-center"
+                                id="is-disabod"
+                              ></div>
+                            </form>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" onclick="saveData()" class="btn btn-primary" id="save-btn"></button>
+                        </div>
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
+            <!-- /.modal -->
+
         <section class="content">
           <div class="container-fluid">
             <div class="row">
@@ -80,12 +192,13 @@
 
                   <div class="card-header d-flex">
                     <h3 class="card-title">Received Documents</h3>
-                    <a
+                    {% comment %} <a
                       href={% url 'register_received_document' %}
                       class="btn btn-default btn-sm ml-auto"
                     >
                       Register Received Document
-                    </a>
+                    </a> {% endcomment %}
+                    <button type="button" onclick="receivedDocumentForm()" class="btn btn-default btn-sm ml-auto"><i class="fa fa-plus"></i> Add Directive</button>
                   </div>
                   <!-- /.card-header -->
                   <div class="card-body">

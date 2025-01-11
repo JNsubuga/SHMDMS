@@ -31,23 +31,23 @@ class getReceivedDocumentById(APIView):
     permission_classes = [IsAuthenticated]
     http_method_names = ["get"]
 
-    def get(self, request, lang, receivedDocumentid):
+    def get(self, request, lang, receiveddocumentid):
         lang = DEFAULT_LANG if lang == None else lang
-        if not receivedDocumentid:
+        if not receiveddocumentid:
             return Response(
                 {
                     "message": "Incomplete data request!!!",
                     "status": False
                 }, status=400
             )
-        elif not _receivedDocument.ReceivedDocumentExists(receivedDocumentid):
+        elif not _receivedDocument.ReceivedDocumentExists(receiveddocumentid):
             return Response(
                 {
                     "message": "Document doesn't exist in the records!!!",
                     "status": False
                 }, status=400
             )
-        response = _receivedDocument.getReceivedDocumentById(request, lang, receivedDocumentid)
+        response = _receivedDocument.getReceivedDocumentById(request, lang, receiveddocumentid)
         return Response(response)
     
 class registerReceivedDocument(APIView):
@@ -113,3 +113,36 @@ class registerReceivedDocument(APIView):
                     "status": False
                 }, status=400
             )
+        
+
+class updateReceivedDocument(APIView):
+    authentication_classes = [SessionAuthentication, TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    http_method_names = ["put"]
+
+    def put(self, request, lang, receiveddocumentid):
+        lang = DEFAULT_LANG if lang == None else lang
+        if not int(receiveddocumentid):
+            return Response(
+                {
+                    "message": "Incomplete data request!!!",
+                    "status": False
+                }, status=400
+            )
+        elif not _receivedDocument.ReceivedDocumentExists(receiveddocumentid):
+            return Response(
+                {
+                    "message": "Document does not Exist in registered received records!!!",
+                    "status": False
+                }, status=400
+            )
+        else:
+            data = request.data
+            _receivedDocument.updateReceivedDocument(receiveddocumentid, data)
+            return Response(
+                {
+                    "message": "Record Successfully Updated!!",
+                    "status": True
+                }, status=201
+            )
+        

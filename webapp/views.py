@@ -22,7 +22,6 @@ _gender = Genders()
 _security = Security()
 
 def getIcon(module):
-    
     if module["code_name"] == "dashboard":
         icon = "nav-icon fas fa-tachometer-alt"
     elif module["code_name"] == "add_user":

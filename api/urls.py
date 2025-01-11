@@ -314,9 +314,9 @@ urlpatterns = [
         name="register-received-document",
     ),
     # Update Received Document Record
-    # path(
-    #     "<str:lang>/shmdms/update/receiveddocument/<int:receiveddocumentid>",
-    #     ReceivedDocumentsView.updateReceivedDocument.as_view(),
-    #     name="update-received-document",
-    # ),
+    path(
+        "<str:lang>/shmdms/update/receiveddocument/<int:receiveddocumentid>",
+        ReceivedDocumentsView.updateReceivedDocument.as_view(),
+        name="update-received-document",
+    ),
 ]

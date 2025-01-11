@@ -21,17 +21,17 @@ class ReceivedDocuments:
                 "dateReceived": receivedDocument.dateReceived,
                 "contactName": receivedDocument.contactName,
                 "contactNumber": receivedDocument.contactNumber,
-                "submitted_by": self.users.getAuthUserById(request, lang, receivedDocument.submitted_by_id),
+                "submitted_by": self.users.getAuthUserById(request, lang, receivedDocument.submitted_by.pk),
                 # is_disabled = models.BooleanField(default=False)
                 # created = models.DateTimeField(auto_now_add=True)
             }
             results.append(receivedDocument_item)
         return results
-    def ReceivedDocumentExists(self, receivedDocumentid):
-        return ReceivedDocument.objects.filter(pk=receivedDocumentid).exists()
+    def ReceivedDocumentExists(self, receiveddocumentid):
+        return ReceivedDocument.objects.filter(pk=receiveddocumentid).exists()
     
-    def getReceivedDocumentById(self, request, lang, receivedDocumentid):
-        receivedDocument = ReceivedDocument.objects.filter(pk=receivedDocumentid)
+    def getReceivedDocumentById(self, request, lang, receiveddocumentid):
+        receivedDocument = ReceivedDocument.objects.filter(pk=receiveddocumentid).get()
         return {
             "id": receivedDocument.pk,
             "memo": receivedDocument.memo,
@@ -39,7 +39,7 @@ class ReceivedDocuments:
             "dateReceived": receivedDocument.dateReceived,
             "contactName": receivedDocument.contactName,
             "contactNumber": receivedDocument.contactNumber,
-            "submitted_by": self.users.getAuthUserById(request, lang, receivedDocument.submitted_by),
+            "submitted_by": self.users.getAuthUserById(request, lang, receivedDocument.submitted_by.pk),
             # is_disabled = models.BooleanField(default=False)
             # created = models.DateTimeField(auto_now_add=True)
         }
@@ -55,4 +55,19 @@ class ReceivedDocuments:
             is_disabled = data["is_disabled"]
         )
         receivedDocument.save()
+        return True
+
+    def updateReceivedDocument(self, receiveddocumentid, data):
+        toUpdate = ReceivedDocument.objects.filter(pk=int(receiveddocumentid))
+        dbRecToUpdate = toUpdate.get()
+        updateRecord_dic = {
+            "memo": data["memo"] if data["memo"] else dbRecToUpdate.memo,
+            "officeFrom": data["officeFrom"] if data["officeFrom"] else dbRecToUpdate.officeFrom,
+            "dateReceived": data["dateReceived"] if data["dateReceived"] else dbRecToUpdate.dateReceived,
+            "contactNumber": data["contactNumber"] if data["contactNumber"] else dbRecToUpdate.contactNumber,
+            "contactName": data["contactName"] if data["contactName"] else dbRecToUpdate.contactName,
+            "is_disabled": data["is_disabled"] if data["is_disabled"] else dbRecToUpdate.is_disabled
+        }
+        # Update edited record
+        toUpdate.update(**updateRecord_dic)
         return True
